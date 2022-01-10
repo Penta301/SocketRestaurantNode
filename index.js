@@ -2,6 +2,8 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -22,4 +24,7 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(3001);
+io.listen(httpServer);
+httpServer.listen(PORT, () => {
+  console.log("Server is listening at http://localhost:" + PORT);
+});
